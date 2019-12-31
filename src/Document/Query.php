@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Dom\Document;
+namespace Laminas\Dom\Document;
 
-use Zend\Dom\Document;
-use Zend\Dom\DOMXPath;
+use Laminas\Dom\Document;
+use Laminas\Dom\DOMXPath;
 
 /**
- * Query object executable in a Zend\Dom\Document
+ * Query object executable in a Laminas\Dom\Document
  */
 class Query
 {
@@ -187,7 +186,7 @@ class Query
             );
         }
 
-        /** ZF-9764 -- remove double asterisk */
+        /** Laminas-9764 -- remove double asterisk */
         $expression = str_replace('**', '*', $expression);
 
         return $expression;

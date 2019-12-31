@@ -1,6 +1,6 @@
 # Querying HTML and XML Documents
 
-`Zend\Dom\Query` provides mechanisms for querying XML and HTML documents
+`Laminas\Dom\Query` provides mechanisms for querying XML and HTML documents
 utilizing either XPath or CSS selectors. It was developed to aid with functional
 testing of MVC applications, but could also be used for development of screen
 scrapers.
@@ -15,12 +15,12 @@ nodes utilizing CSS selectors.  [Prototype's $$()](http://prototypejs.org/api/ut
 
 ## Theory of Operation
 
-To use `Zend\Dom\Query`, you instantiate a `Zend\Dom\Query` object, optionally
+To use `Laminas\Dom\Query`, you instantiate a `Laminas\Dom\Query` object, optionally
 passing a document to query (a string). Once you have a document, you can use
 either the `execute()` or `queryXpath()` methods; each method will return a
-`Zend\Dom\NodeList` object with any matching nodes.
+`Laminas\Dom\NodeList` object with any matching nodes.
 
-The primary difference between `Zend\Dom\Query` and using
+The primary difference between `Laminas\Dom\Query` and using
 [DOMDocument](http://php.net/domdocument) + [DOMXPath](http://php.net/domxpath)
 is the ability to select against CSS + selectors. You can utilize any of the
 following, in any combination:
@@ -73,14 +73,14 @@ following, in any combination:
 
 Once you've performed your query, you can then work with the result object to
 determine information about the nodes, as well as to pull them and/or their
-content directly for examination and manipulation. `Zend\Dom\NodeList`
+content directly for examination and manipulation. `Laminas\Dom\NodeList`
 implements `Countable` and `Iterator`, and stores the results internally as a
 [DOMDocument](http://php.net/domdocument) and [DOMNodeList](http://php.net/domnodelist).
 
 As an example, consider the following call, that selects against the HTML above:
 
 ```php
-use Zend\Dom\Query;
+use Laminas\Dom\Query;
 
 $dom = new Query($html);
 $results = $dom->execute('.foo .bar a');
@@ -91,24 +91,24 @@ foreach ($results as $result) {
 }
 ```
 
-`Zend\Dom\Query` also allows straight XPath queries utilizing the `queryXpath()`
+`Laminas\Dom\Query` also allows straight XPath queries utilizing the `queryXpath()`
 method; you can pass any valid XPath query to this method, and it will return a
-`Zend\Dom\NodeList` object.
+`Laminas\Dom\NodeList` object.
 
 ## Methods Available
 
 Below is a listing of methods available in the various classes exposed by
-zend-dom.
+laminas-dom.
 
-### Zend\\Dom\\Query
+### Laminas\\Dom\\Query
 
-The following methods are available to `Zend\Dom\Query`:
+The following methods are available to `Laminas\Dom\Query`:
 
 - `setDocumentXml($document, $encoding = null)`: specify an XML string to query against.
 - `setDocumentXhtml($document, $encoding = null)`: specify an XHTML string to query against.
 - `setDocumentHtml($document, $encoding = null)`: specify an HTML string to query against.
 - `setDocument($document, $encoding = null)`: specify a string to query against;
-  `Zend\Dom\Query` will then attempt to autodetect the document type.
+  `Laminas\Dom\Query` will then attempt to autodetect the document type.
 - `setEncoding($encoding)`: specify an encoding string to use. This encoding
   will be passed to [DOMDocument's constructor](http://php.net/domdocument.construct)
   if specified.
@@ -120,15 +120,15 @@ The following methods are available to `Zend\Dom\Query`:
 - `execute($query)`: query the document using CSS selector notation.
 - `queryXpath($xPathQuery)`: query the document using XPath notation.
 
-### Zend\\Dom\\NodeList
+### Laminas\\Dom\\NodeList
 
-As mentioned previously, `Zend\Dom\NodeList` implements both `Iterator` and
+As mentioned previously, `Laminas\Dom\NodeList` implements both `Iterator` and
 `Countable`, and as such can be used in a `foreach()` loop as well as with the
 `count()` function. Additionally, it exposes the following methods:
 
 - `getCssQuery()`: return the CSS selector query used to produce the result (if
   any).
 - `getXpathQuery()`: return the XPath query used to produce the result.
-  Internally, `Zend\Dom\Query` converts CSS selector queries to XPath, so this
+  Internally, `Laminas\Dom\Query` converts CSS selector queries to XPath, so this
   value will always be populated.
 - `getDocument()`: retrieve the DOMDocument the selection was made against.
