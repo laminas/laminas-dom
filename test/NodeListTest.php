@@ -1,27 +1,25 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Dom
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Dom;
+namespace LaminasTest\Dom;
 
-use Zend\Dom\NodeList;
+use Laminas\Dom\NodeList;
 
 /**
- * @category   Zend
- * @package    Zend_Dom
+ * @category   Laminas
+ * @package    Laminas_Dom
  * @subpackage UnitTests
- * @group      Zend_Dom
+ * @group      Laminas_Dom
  */
 class NodeListTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @group ZF-4631
+     * @group Laminas-4631
      */
     public function testEmptyResultDoesNotReturnIteratorValidTrue()
     {
