@@ -1,19 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Dom
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Dom;
+namespace Laminas\Dom;
 
 /**
  * Transform CSS selectors to XPath
  *
- * @package    Zend_Dom
+ * @package    Laminas_Dom
  * @subpackage Query
  */
 class Css2Xpath
@@ -123,7 +121,7 @@ class Css2Xpath
             $expression
         );
 
-        /** ZF-9764 -- remove double asterisk */
+        /** Laminas-9764 -- remove double asterisk */
         $expression = str_replace('**', '*', $expression);
 
         return $expression;
