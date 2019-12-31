@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Dom\Document;
+namespace LaminasTest\Dom\Document;
 
 use DOMDocument;
 use DOMNode;
 use DOMNodeList;
+use Laminas\Dom\Document\NodeList;
+use Laminas\Dom\Exception\BadMethodCallException;
 use PHPUnit\Framework\TestCase;
-use Zend\Dom\Document\NodeList;
-use Zend\Dom\Exception\BadMethodCallException;
 
 /**
- * @covers Zend\Dom\Document\NodeList
+ * @covers Laminas\Dom\Document\NodeList
  */
 class NodeListTest extends TestCase
 {
@@ -36,7 +35,7 @@ class NodeListTest extends TestCase
     }
 
     /**
-     * @group ZF-4631
+     * @group Laminas-4631
      */
     public function testEmptyResultDoesNotReturnIteratorValidTrue()
     {

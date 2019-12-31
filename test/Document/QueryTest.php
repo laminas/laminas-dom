@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Dom\Document;
+namespace LaminasTest\Dom\Document;
 
+use Laminas\Dom\Document\Query;
 use PHPUnit\Framework\TestCase;
-use Zend\Dom\Document\Query;
 
 /**
- * @covers Zend\Dom\Document\Query
+ * @covers Laminas\Dom\Document\Query
  */
 class QueryTest extends TestCase
 {
@@ -24,7 +23,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-6281
+     * @group Laminas-6281
      */
     public function testTransformShouldReturnMultiplePathsWhenExpressionContainsCommas()
     {
@@ -66,7 +65,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-6281
+     * @group Laminas-6281
      */
     public function testMultipleComplexCssSpecificationShouldTransformToExpectedXpath()
     {
@@ -126,7 +125,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-4010
+     * @group Laminas-4010
      */
     public function testShouldAllowMatchingOfAttributeValues()
     {
@@ -144,7 +143,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-8006
+     * @group Laminas-8006
      *
      * @dataProvider descendantSelector
      *
@@ -157,7 +156,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-9764
+     * @group Laminas-9764
      */
     public function testIdSelectorWithAttribute()
     {
@@ -166,7 +165,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-9764
+     * @group Laminas-9764
      */
     public function testIdSelectorWithLeadingAsterisk()
     {
@@ -175,7 +174,7 @@ class QueryTest extends TestCase
     }
 
     /**
-     * @group ZF-5310
+     * @group Laminas-5310
      */
     public function testCanTransformWithAttributeAndDot()
     {
