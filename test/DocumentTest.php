@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Dom;
+namespace LaminasTest\Dom;
 
 use DOMDocument;
-use Zend\Dom\Document;
-use Zend\Dom\Exception\ExceptionInterface as DOMException;
-use Zend\Dom\Exception\RuntimeException;
+use Laminas\Dom\Document;
+use Laminas\Dom\Exception\ExceptionInterface as DOMException;
+use Laminas\Dom\Exception\RuntimeException;
 
 /**
- * @covers Zend\Dom\Document
- * @covers Zend\Dom\Document\Query::execute
+ * @covers Laminas\Dom\Document
+ * @covers Laminas\Dom\Document\Query::execute
  */
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
@@ -227,7 +226,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9243
+     * @group Laminas-9243
      */
     public function testLoadingDocumentWithErrorsShouldNotRaisePhpErrors()
     {
@@ -240,7 +239,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9765
+     * @group Laminas-9765
      */
     public function testCssSelectorShouldFindNodesWhenMatchingMultipleAttributes()
     {
@@ -268,7 +267,7 @@ HTML;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testAllowsSpecifyingEncodingAtConstruction()
     {
@@ -277,7 +276,7 @@ HTML;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testAllowsSpecifyingEncodingWhenSettingDocument()
     {
@@ -286,7 +285,7 @@ HTML;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testAllowsSpecifyingEncodingViaSetter()
     {
@@ -295,7 +294,7 @@ HTML;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testSpecifyingEncodingSetsEncodingOnDomDocument()
     {
@@ -307,7 +306,7 @@ HTML;
     }
 
     /**
-     * @group ZF-11376
+     * @group Laminas-11376
      */
     public function testXhtmlDocumentWithXmlDeclaration()
     {
@@ -324,7 +323,7 @@ XML;
     }
 
     /**
-     * @group ZF-12106
+     * @group Laminas-12106
      */
     public function testXhtmlDocumentWithXmlAndDoctypeDeclaration()
     {
