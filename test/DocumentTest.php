@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Dom;
+namespace LaminasTest\Dom;
 
-use Zend\Dom\Document;
-use Zend\Dom\NodeList;
-use Zend\Dom\Exception\ExceptionInterface as DOMException;
+use Laminas\Dom\Document;
+use Laminas\Dom\Exception\ExceptionInterface as DOMException;
+use Laminas\Dom\NodeList;
 
 /**
- * Test class for Zend\Dom\Document.
+ * Test class for Laminas\Dom\Document.
  *
- * @group      Zend_Dom
+ * @group      Laminas_Dom
  */
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
@@ -71,7 +70,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
     public function testDomDocShouldRaiseExceptionByDefault()
     {
-        $this->setExpectedException('\Zend\Dom\Exception\RuntimeException', 'no document');
+        $this->setExpectedException('\Laminas\Dom\Exception\RuntimeException', 'no document');
         $this->document->getDomDocument();
     }
 
@@ -111,7 +110,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
     public function testQueryingWithoutRegisteringDocumentShouldThrowException()
     {
-        $this->setExpectedException('\Zend\Dom\Exception\RuntimeException', 'no document');
+        $this->setExpectedException('\Laminas\Dom\Exception\RuntimeException', 'no document');
         $result = Document\Query::execute('.foo', $this->document, Document\Query::TYPE_CSS);
     }
 
@@ -237,7 +236,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9243
+     * @group Laminas-9243
      */
     public function testLoadingDocumentWithErrorsShouldNotRaisePhpErrors()
     {
@@ -250,7 +249,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9765
+     * @group Laminas-9765
      */
     public function testCssSelectorShouldFindNodesWhenMatchingMultipleAttributes()
     {
@@ -278,7 +277,7 @@ EOF;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testAllowsSpecifyingEncodingAtConstruction()
     {
@@ -287,7 +286,7 @@ EOF;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testAllowsSpecifyingEncodingWhenSettingDocument()
     {
@@ -296,7 +295,7 @@ EOF;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testAllowsSpecifyingEncodingViaSetter()
     {
@@ -305,19 +304,19 @@ EOF;
     }
 
     /**
-     * @group ZF-3938
+     * @group Laminas-3938
      */
     public function testSpecifyingEncodingSetsEncodingOnDomDocument()
     {
         $this->document = new Document($this->getHtml(), null, 'utf-8');
         $result = Document\Query::execute('.foo', $this->document, Document\Query::TYPE_CSS);
-        $this->assertInstanceof('\\Zend\\Dom\\Document\\NodeList', $result);
+        $this->assertInstanceof('\\Laminas\\Dom\\Document\\NodeList', $result);
         $this->assertInstanceof('\\DOMDocument', $this->document->getDomDocument());
         $this->assertEquals('utf-8', $this->document->getEncoding());
     }
 
     /**
-     * @group ZF-11376
+     * @group Laminas-11376
      */
     public function testXhtmlDocumentWithXmlDeclaration()
     {
@@ -334,7 +333,7 @@ EOB;
     }
 
     /**
-     * @group ZF-12106
+     * @group Laminas-12106
      */
     public function testXhtmlDocumentWithXmlAndDoctypeDeclaration()
     {
@@ -367,7 +366,7 @@ EOB;
 </results>
 XML;
         $this->document = new Document($xml);
-        $this->setExpectedException("\Zend\Dom\Exception\RuntimeException");
+        $this->setExpectedException("\Laminas\Dom\Exception\RuntimeException");
         $result = Document\Query::execute('/', $this->document);
     }
 
@@ -391,7 +390,7 @@ XML;
     }
 
     /**
-     * @expectedException Zend\Dom\Exception\BadMethodCallException
+     * @expectedException Laminas\Dom\Exception\BadMethodCallException
      */
     public function testOffsetSet()
     {
@@ -404,7 +403,7 @@ XML;
 
 
     /**
-     * @expectedException Zend\Dom\Exception\BadMethodCallException
+     * @expectedException Laminas\Dom\Exception\BadMethodCallException
      */
     public function testOffsetUnset()
     {
