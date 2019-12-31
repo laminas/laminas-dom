@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Dom
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Dom;
+namespace LaminasTest\Dom;
 
-use Zend\Dom\Css2Xpath;
+use Laminas\Dom\Css2Xpath;
 
 /**
  * Test class for Css2Xpath.
  *
- * @category   Zend
- * @package    Zend_Dom
+ * @category   Laminas
+ * @package    Laminas_Dom
  * @subpackage UnitTests
- * @group      Zend_Dom
+ * @group      Laminas_Dom
  */
 class Css2XpathTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,7 +32,7 @@ class Css2XpathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6281
+     * @group Laminas-6281
      */
     public function testTransformShouldReturnMultiplePathsWhenExpressionContainsCommas()
     {
@@ -76,7 +74,7 @@ class Css2XpathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6281
+     * @group Laminas-6281
      */
     public function testMultipleComplexCssSpecificationShouldTransformToExpectedXpath()
     {
@@ -134,7 +132,7 @@ class Css2XpathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-4010
+     * @group Laminas-4010
      */
     public function testShouldAllowMatchingOfAttributeValues()
     {
@@ -143,7 +141,7 @@ class Css2XpathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8006
+     * @group Laminas-8006
      */
     public function testShouldAllowWhitespaceInDescendentSelectorExpressions()
     {
@@ -152,7 +150,7 @@ class Css2XpathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9764
+     * @group Laminas-9764
      */
     public function testIdSelectorWithAttribute()
     {
@@ -161,7 +159,7 @@ class Css2XpathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9764
+     * @group Laminas-9764
      */
     public function testIdSelectorWithLeadingAsterix()
     {
