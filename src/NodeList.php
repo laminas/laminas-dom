@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Dom
+ * @see       https://github.com/laminas/laminas-dom for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Dom;
+namespace Laminas\Dom;
 
 use Countable;
 use DOMDocument;
@@ -20,7 +18,7 @@ use Iterator;
 /**
  * Nodelist for DOM XPath query
  *
- * @package    Zend_Dom
+ * @package    Laminas_Dom
  * @subpackage Query
  */
 class NodeList implements Iterator, Countable
