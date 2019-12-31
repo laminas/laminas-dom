@@ -2,8 +2,11 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - index.md
-    - Intro: intro.md
-    - "Querying HTML and XML": query.md
+    - { Intro: intro.md }
+    - { 'Querying HTML and XML': query.md }
 site_name: laminas-dom
 site_description: laminas-dom
 repo_url: 'https://github.com/laminas/laminas-dom'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
