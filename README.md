@@ -1,6 +1,6 @@
 # laminas-dom
 
-[![Build Status](https://travis-ci.org/laminas/laminas-dom.svg?branch=master)](https://travis-ci.org/laminas/laminas-dom)
+[![Build Status](https://travis-ci.com/laminas/laminas-dom.svg?branch=master)](https://travis-ci.com/laminas/laminas-dom)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-dom/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-dom?branch=master)
 
 The `Laminas\Dom` component provides tools for working with DOM documents and
