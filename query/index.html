@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-dom</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -286,16 +276,15 @@ content directly for examination and manipulation. <code>Laminas\Dom\NodeList</c
 implements <code>Countable</code> and <code>Iterator</code>, and stores the results internally as a
 <a href="http://php.net/domdocument">DOMDocument</a> and <a href="http://php.net/domnodelist">DOMNodeList</a>.</p>
 <p>As an example, consider the following call, that selects against the HTML above:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Dom\Query;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Dom\Query;
 
-<span class=x>$dom = new Query($html);</span>
-<span class=x>$results = $dom-&gt;execute(&#39;.foo .bar a&#39;);</span>
+$dom = new Query($html);
+$results = $dom-&gt;execute('.foo .bar a');
 
-<span class=x>$count = count($results); // get number of matches: 4</span>
-<span class=x>foreach ($results as $result) {</span>
-<span class=x>    // $result is a DOMElement</span>
-<span class=x>}</span>
-</pre></div></p>
+$count = count($results); // get number of matches: 4
+foreach ($results as $result) {
+    // $result is a DOMElement
+}</code></pre>
 <p><code>Laminas\Dom\Query</code> also allows straight XPath queries utilizing the <code>queryXpath()</code>
 method; you can pass any valid XPath query to this method, and it will return a
 <code>Laminas\Dom\NodeList</code> object.</p>
@@ -398,20 +387,6 @@ laminas-dom.</p>
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-dom</a>
-                            </li>
-                        
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
                                 <a href="../intro/" class="subnavigation__link">Intro</a>
                             </li>
                         
@@ -455,9 +430,10 @@ laminas-dom.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -494,7 +470,7 @@ laminas-dom.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-dom//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-dom/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -503,8 +479,8 @@ laminas-dom.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-dom//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-dom/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
