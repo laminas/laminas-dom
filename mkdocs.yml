@@ -9,4 +9,3 @@ site_description: laminas-dom
 repo_url: 'https://github.com/laminas/laminas-dom'
 extra:
     project: Components
-    project_url: 'https://docs.laminas.dev'
