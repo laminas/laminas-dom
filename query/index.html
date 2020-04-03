@@ -310,8 +310,7 @@ following, in any combination:</p>
   arbitrary depth beneath an element with a class of <code>foo</code>, that is an
   descendent of arbitrary depth beneath a <code>div</code> element. For example, it would
   match the link to the word 'One' in the listing below:</p>
-<p><code>html
-&lt;div&gt;
+<pre class="highlight"><code class="language-html">&lt;div&gt;
 &lt;table&gt;
     &lt;tr&gt;
         &lt;td class="foo"&gt;
@@ -326,7 +325,8 @@ following, in any combination:</p>
         &lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;
-&lt;/div&gt;</code></p>
+&lt;/div&gt;</code></pre>
+
 </li>
 </ul>
 <p>Once you've performed your query, you can then work with the result object to
@@ -335,7 +335,7 @@ content directly for examination and manipulation. <code>Laminas\Dom\NodeList</c
 implements <code>Countable</code> and <code>Iterator</code>, and stores the results internally as a
 <a href="http://php.net/domdocument">DOMDocument</a> and <a href="http://php.net/domnodelist">DOMNodeList</a>.</p>
 <p>As an example, consider the following call, that selects against the HTML above:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Dom\Query;
+<pre class="highlight"><code class="language-php">use Laminas\Dom\Query;
 
 $dom = new Query($html);
 $results = $dom-&gt;execute('.foo .bar a');
@@ -344,6 +344,7 @@ $count = count($results); // get number of matches: 4
 foreach ($results as $result) {
     // $result is a DOMElement
 }</code></pre>
+
 <p><code>Laminas\Dom\Query</code> also allows straight XPath queries utilizing the <code>queryXpath()</code>
 method; you can pass any valid XPath query to this method, and it will return a
 <code>Laminas\Dom\NodeList</code> object.</p>
