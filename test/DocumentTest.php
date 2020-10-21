@@ -233,8 +233,8 @@ class DocumentTest extends TestCase
         $this->loadHtml();
         $this->document->registerXpathPhpFunctions('stripos');
 
-        $this->expectException(\Error::class);
-        $this->expectExceptionMessage('Not allowed to call handler \'strtolower()\'.');
+        $this->expectException(PHP_VERSION_ID >= 80000 ? \Error::class : \ErrorException::class);
+        $this->expectExceptionMessageMatches('/Not allowed to call handler .strtolower()/');
 
         Document\Query::execute(
             '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
