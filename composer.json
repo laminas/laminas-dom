@@ -26,6 +26,8 @@
     },
     "require": {
         "php": "^7.3 || ~8.0.0",
+        "ext-dom": "*",
+        "ext-libxml": "*",
         "laminas/laminas-zendframework-bridge": "^1.1"
     },
     "require-dev": {
