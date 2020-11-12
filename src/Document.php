@@ -322,7 +322,7 @@ class Document
      *
      * @return bool
      */
-    public static function disableEntityLoader($flag = true)
+    private static function disableEntityLoader($flag = true)
     {
         if (LIBXML_VERSION < 20900) {
             return libxml_disable_entity_loader($flag);
