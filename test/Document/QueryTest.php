@@ -77,7 +77,7 @@ class QueryTest extends TestCase
             "//div[@id='foo']//span[contains(concat(' ', normalize-space(@class), ' '), ' bar ')]",
             "//*[@id='bar']//li[contains(concat(' ', normalize-space(@class), ' '), ' baz ')]//a",
         ];
-        $this->assertEquals(count($expected), count($actual));
+        $this->assertCount(count($expected), $actual);
         foreach ($actual as $path) {
             $this->assertContains($path, $expected);
         }

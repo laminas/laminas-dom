@@ -58,6 +58,7 @@ class DocumentTest extends TestCase
     public function testConstructorShouldNotRequireArguments()
     {
         $document = new Document();
+        $this->assertInstanceOf(Document::class, $document);
     }
 
     public function testConstructorShouldAcceptDocumentString()
@@ -178,7 +179,7 @@ class DocumentTest extends TestCase
     {
         $this->loadHtml();
         $result = Document\Query::execute('div[data-attr="foo bar baz"]', $this->document, Document\Query::TYPE_CSS);
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 
     public function testQueryShouldFindNodesWithArbitraryAttributeSelectorsAsDiscreteWords()
@@ -206,11 +207,15 @@ class DocumentTest extends TestCase
     {
         $this->loadHtml();
         try {
-            $result = Document\Query::execute(
+            Document\Query::execute(
                 '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
                 $this->document
             );
         } catch (\Exception $e) {
+            $this->assertSame(
+                'DOMXPath::query(): xmlXPathCompOpEval: function functionString bound to undefined prefix php',
+                $e->getMessage()
+            );
             return;
         }
         $this->fail('XPath PHPFunctions should be disabled by default');
@@ -235,12 +240,12 @@ class DocumentTest extends TestCase
         $this->loadHtml();
         try {
             $this->document->registerXpathPhpFunctions('stripos');
-            $result = Document\Query::execute(
+            Document\Query::execute(
                 '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
                 $this->document
             );
         } catch (\Exception $e) {
-            // $e->getMessage() - Not allowed to call handler 'strtolower()
+            $this->assertSame('DOMXPath::query(): Not allowed to call handler \'strtolower()\'.', $e->getMessage());
             return;
         }
         $this->fail('Not allowed to call handler strtolower()');
