@@ -17,7 +17,6 @@ use Laminas\Dom\Exception\ExceptionInterface as DOMException;
 use Laminas\Dom\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
-use function count;
 use function file_get_contents;
 use function restore_error_handler;
 use function set_error_handler;
@@ -66,6 +65,7 @@ class DocumentTest extends TestCase
     public function testConstructorShouldNotRequireArguments()
     {
         $document = new Document();
+        $this->assertInstanceOf(Document::class, $document);
     }
 
     public function testConstructorShouldAcceptDocumentString()
@@ -186,7 +186,7 @@ class DocumentTest extends TestCase
     {
         $this->loadHtml();
         $result = Document\Query::execute('div[data-attr="foo bar baz"]', $this->document, Document\Query::TYPE_CSS);
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
     }
 
     public function testQueryShouldFindNodesWithArbitraryAttributeSelectorsAsDiscreteWords()
@@ -214,7 +214,7 @@ class DocumentTest extends TestCase
     {
         $this->loadHtml();
         try {
-            $result = Document\Query::execute(
+            Document\Query::execute(
                 '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
                 $this->document
             );
