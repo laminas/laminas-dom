@@ -31,7 +31,7 @@
         "laminas/laminas-zendframework-bridge": "^1.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-coding-standard": "^2.1.4",
         "phpunit/phpunit": "^9.4.3"
     },
     "autoload": {
