@@ -29,10 +29,8 @@ class DocumentTest extends TestCase
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->document = new Document();
     }
@@ -233,17 +231,15 @@ class DocumentTest extends TestCase
     public function testXpathPhpFunctionsShouldBeNotCalledWhenSpecifiedFunction()
     {
         $this->loadHtml();
-        try {
-            $this->document->registerXpathPhpFunctions('stripos');
-            $result = Document\Query::execute(
-                '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
-                $this->document
-            );
-        } catch (\Exception $e) {
-            // $e->getMessage() - Not allowed to call handler 'strtolower()
-            return;
-        }
-        $this->fail('Not allowed to call handler strtolower()');
+        $this->document->registerXpathPhpFunctions('stripos');
+
+        $this->expectException(PHP_VERSION_ID >= 80000 ? \Error::class : \ErrorException::class);
+        $this->expectExceptionMessageMatches('/Not allowed to call handler .strtolower()/');
+
+        Document\Query::execute(
+            '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
+            $this->document
+        );
     }
 
     /**
@@ -255,7 +251,7 @@ class DocumentTest extends TestCase
         $this->document = new Document($file);
         $result = Document\Query::execute('p', $this->document, Document\Query::TYPE_CSS);
         $errors = $this->document->getErrors();
-        $this->assertInternalType('array', $errors);
+        $this->assertIsArray($errors);
         $this->assertNotEmpty($errors);
     }
 

@@ -26,7 +26,7 @@ class NodeListTest extends TestCase
     /** @var NodeList|DOMNode[] */
     private $nodeList;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $document = new DOMDocument();
         $document->loadHTML('<html><body><a></a><b></b></body></html>');

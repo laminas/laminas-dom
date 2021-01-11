@@ -19,7 +19,7 @@ class DOMXPathTest extends TestCase
     /** @var DOMDocument */
     private $document;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->document = new DOMDocument('<any></any>');
     }
