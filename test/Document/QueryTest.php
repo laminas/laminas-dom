@@ -8,8 +8,12 @@
 
 namespace LaminasTest\Dom\Document;
 
+use Generator;
 use Laminas\Dom\Document\Query;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function explode;
 
 /**
  * @covers Laminas\Dom\Document\Query
@@ -19,7 +23,7 @@ class QueryTest extends TestCase
     public function testTransformShouldReturnStringByDefault()
     {
         $test = Query::cssToXpath('');
-        $this->assertInternalType('string', $test);
+        $this->assertIsString($test);
     }
 
     /**
@@ -28,8 +32,8 @@ class QueryTest extends TestCase
     public function testTransformShouldReturnMultiplePathsWhenExpressionContainsCommas()
     {
         $test = Query::cssToXpath('#foo, #bar');
-        $this->assertInternalType('string', $test);
-        $this->assertContains('|', $test);
+        $this->assertIsString($test);
+        $this->assertStringContainsString('|', $test);
         $this->assertCount(2, explode('|', $test));
     }
 
@@ -48,13 +52,13 @@ class QueryTest extends TestCase
     public function testTransformShouldAssumeSpacesToIndicateRelativeXpathQueries()
     {
         $test = Query::cssToXpath('div#foo .bar');
-        $this->assertContains('|', $test);
+        $this->assertStringContainsString('|', $test);
         $expected = [
             "//div[@id='foo']//*[contains(concat(' ', normalize-space(@class), ' '), ' bar ')]",
             "//div[@id='foo'][contains(concat(' ', normalize-space(@class), ' '), ' bar ')]",
         ];
         foreach ($expected as $path) {
-            $this->assertContains($path, $test);
+            $this->assertStringContainsString($path, $test);
         }
     }
 
@@ -70,8 +74,8 @@ class QueryTest extends TestCase
     public function testMultipleComplexCssSpecificationShouldTransformToExpectedXpath()
     {
         $test = Query::cssToXpath('div#foo span.bar, #bar li.baz a');
-        $this->assertInternalType('string', $test);
-        $this->assertContains('|', $test);
+        $this->assertIsString($test);
+        $this->assertStringContainsString('|', $test);
         $actual   = explode('|', $test);
         $expected = [
             "//div[@id='foo']//span[contains(concat(' ', normalize-space(@class), ' '), ' bar ')]",
@@ -86,7 +90,7 @@ class QueryTest extends TestCase
     public function testClassNotationWithoutSpecifiedTagShouldResultInMultipleQueries()
     {
         $test = Query::cssToXpath('div.foo .bar a .baz span');
-        $this->assertContains('|', $test);
+        $this->assertStringContainsString('|', $test);
         // @codingStandardsIgnoreStart
         $segments = [
             "//div[contains(concat(' ', normalize-space(@class), ' '), ' foo ')]//*[contains(concat(' ', normalize-space(@class), ' '), ' bar ')]//a//*[contains(concat(' ', normalize-space(@class), ' '), ' baz ')]//span",
@@ -96,7 +100,7 @@ class QueryTest extends TestCase
         ];
         // @codingStandardsIgnoreEnd
         foreach ($segments as $xpath) {
-            $this->assertContains($xpath, $test);
+            $this->assertStringContainsString($xpath, $test);
         }
     }
 
@@ -133,7 +137,7 @@ class QueryTest extends TestCase
         $this->assertEquals("//tag[@id='id']//@attribute", $test);
     }
 
-    public function descendantSelector()
+    public function descendantSelector(): Generator
     {
         yield 'space before' => ['child >leaf'];
         yield 'space after' => ['child> leaf'];
@@ -144,9 +148,7 @@ class QueryTest extends TestCase
 
     /**
      * @group Laminas-8006
-     *
      * @dataProvider descendantSelector
-     *
      * @param string $path
      */
     public function testShouldAllowWhitespaceInDescendantSelectorExpressions($path)
@@ -185,14 +187,14 @@ class QueryTest extends TestCase
         $this->assertEquals("//a[@href='http://example.com']", $test);
     }
 
-    public function nestedAttributeSelectors()
+    public function nestedAttributeSelectors(): array
     {
         return [
-            'with-double-quotes' => [
+            'with-double-quotes'                     => [
                 'select[name="foo"] option[selected="selected"]',
                 "//select[@name='foo']//option[@selected='selected']",
             ],
-            'with-single-quotes' => [
+            'with-single-quotes'                     => [
                 "select[name='foo'] option[selected='selected']",
                 "//select[@name='foo']//option[@selected='selected']",
             ],
@@ -210,7 +212,7 @@ class QueryTest extends TestCase
     /**
      * @dataProvider nestedAttributeSelectors
      */
-    public function testTransformNestedAttributeSelectors($selector, $expectedXpath)
+    public function testTransformNestedAttributeSelectors(string $selector, string $expectedXpath)
     {
         $this->assertEquals($expectedXpath, Query::cssToXpath($selector));
     }

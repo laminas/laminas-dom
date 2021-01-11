@@ -15,44 +15,46 @@ use DOMNode;
 use DOMNodeList;
 use Iterator;
 
+use function in_array;
+use function range;
+
 /**
  * Nodelist for DOM XPath query
+ *
  * @deprecated
+ *
  * @see \Laminas\Dom\Document\NodeList
  */
 class NodeList implements Iterator, Countable, ArrayAccess
 {
     /**
      * CSS Selector query
+     *
      * @var string
      */
     protected $cssQuery;
 
-    /**
-     * @var DOMDocument
-     */
+    /** @var DOMDocument */
     protected $document;
 
-    /**
-     * @var DOMNodeList
-     */
+    /** @var DOMNodeList */
     protected $nodeList;
 
     /**
      * Current iterator position
+     *
      * @var int
      */
     protected $position = 0;
 
     /**
      * XPath query
+     *
      * @var string
      */
     protected $xpathQuery;
 
-    /**
-     * @var DOMNode|null
-     */
+    /** @var DOMNode|null */
     protected $contextNode;
 
     /**
@@ -60,16 +62,13 @@ class NodeList implements Iterator, Countable, ArrayAccess
      *
      * @param string       $cssQuery
      * @param string|array $xpathQuery
-     * @param DOMDocument  $document
-     * @param DOMNodeList  $nodeList
-     * @param DOMNode|null $contextNode
      */
     public function __construct(
         $cssQuery,
         $xpathQuery,
         DOMDocument $document,
         DOMNodeList $nodeList,
-        DOMNode $contextNode = null
+        ?DOMNode $contextNode = null
     ) {
         $this->cssQuery    = $cssQuery;
         $this->xpathQuery  = $xpathQuery;
@@ -216,7 +215,7 @@ class NodeList implements Iterator, Countable, ArrayAccess
      *
      * @param  mixed $key
      * @param  mixed $value
-     * @throws Exception\BadMethodCallException when attempting to write to a read-only item
+     * @throws Exception\BadMethodCallException When attempting to write to a read-only item.
      */
     public function offsetSet($key, $value)
     {
@@ -227,7 +226,7 @@ class NodeList implements Iterator, Countable, ArrayAccess
      * ArrayAccess: unset offset
      *
      * @param  mixed $key
-     * @throws Exception\BadMethodCallException when attempting to unset a read-only item
+     * @throws Exception\BadMethodCallException When attempting to unset a read-only item.
      */
     public function offsetUnset($key)
     {

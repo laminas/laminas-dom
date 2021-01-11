@@ -10,6 +10,19 @@ namespace Laminas\Dom;
 
 use DOMDocument;
 
+use function libxml_clear_errors;
+use function libxml_disable_entity_loader;
+use function libxml_get_errors;
+use function libxml_use_internal_errors;
+use function preg_match;
+use function sprintf;
+use function strstr;
+use function substr;
+use function trim;
+
+use const LIBXML_VERSION;
+use const XML_DOCUMENT_TYPE_NODE;
+
 /**
  * Class used to initialize DomDocument from string, with proper verifications
  */
@@ -18,43 +31,49 @@ class Document
     /**#@+
      * Document types
      */
-    const DOC_HTML     = 'DOC_HTML';
-    const DOC_XHTML    = 'DOC_XHTML';
-    const DOC_XML      = 'DOC_XML';
+    public const DOC_HTML  = 'DOC_HTML';
+    public const DOC_XHTML = 'DOC_XHTML';
+    public const DOC_XML   = 'DOC_XML';
     /**#@-*/
 
     /**
      * Raw document
+     *
      * @var string
      */
     protected $stringDocument;
 
     /**
      * DOMDocument generated from raw string document
+     *
      * @var DOMDocument
      */
     protected $domDocument;
 
     /**
      * Type of the document provided
+     *
      * @var string
      */
     protected $type;
 
     /**
      * Error list generated from transformation of document to DOMDocument
+     *
      * @var array
      */
     protected $errors = [];
 
     /**
      * XPath namespaces
+     *
      * @var array
      */
     protected $xpathNamespaces = [];
 
     /**
      * XPath PHP Functions
+     *
      * @var mixed
      */
     protected $xpathPhpFunctions;
@@ -101,17 +120,17 @@ class Document
         }
 
         // Breaking XML declaration to make syntax highlighting work
-        if ('<' . '?xml' == substr(trim($document), 0, 5)) {
+        if ('<' . '?xml' === substr(trim($document), 0, 5)) {
             $type = static::DOC_XML;
             if (preg_match('/<html[^>]*xmlns="([^"]+)"[^>]*>/i', $document, $matches)) {
                 $this->xpathNamespaces[] = $matches[1];
-                $type = static::DOC_XHTML;
+                $type                    = static::DOC_XHTML;
             }
         }
 
         // Unsetting previously registered DOMDocument
-        $this->domDocument     = null;
-        $this->stringDocument  = ! empty($document) ? $document : null;
+        $this->domDocument    = null;
+        $this->stringDocument = ! empty($document) ? $document : null;
 
         $this->setType($forcedType ?: (! empty($document) ? $type : null));
         $this->setEncoding($forcedEncoding);
@@ -147,7 +166,7 @@ class Document
      * Get DOMDocument generated from set raw document
      *
      * @return DOMDocument
-     * @throws Exception\RuntimeException If cannot get DOMDocument; no document registered
+     * @throws Exception\RuntimeException If cannot get DOMDocument; no document registered.
      */
     public function getDomDocument()
     {
@@ -165,9 +184,9 @@ class Document
     /**
      * Set DOMDocument
      *
-     * @param  DOMDocument $domDocument
-     * @return self
      * @deprecated
+     *
+     * @return self
      */
     protected function setDomDocument(DOMDocument $domDocument)
     {
@@ -225,17 +244,18 @@ class Document
     /**
      * Get DOMDocument from set raw document
      *
+     * @param string $stringDocument
      * @return DOMDocument
      * @throws Exception\RuntimeException
      */
     protected function getDomDocumentFromString($stringDocument)
     {
         libxml_use_internal_errors(true);
-        libxml_disable_entity_loader(true);
+        $disableEntityLoaderFlag = self::disableEntityLoader();
 
-        $encoding  = $this->getEncoding();
-        $domDoc    = null === $encoding ? new DOMDocument('1.0') : new DOMDocument('1.0', $encoding);
-        $type      = $this->getType();
+        $encoding = $this->getEncoding();
+        $domDoc   = null === $encoding ? new DOMDocument('1.0') : new DOMDocument('1.0', $encoding);
+        $type     = $this->getType();
 
         switch ($type) {
             case static::DOC_XML:
@@ -261,7 +281,7 @@ class Document
             libxml_clear_errors();
         }
 
-        libxml_disable_entity_loader(false);
+        self::disableEntityLoader($disableEntityLoaderFlag);
         libxml_use_internal_errors(false);
 
         if (! $success) {
@@ -301,6 +321,7 @@ class Document
     {
         return $this->xpathPhpFunctions;
     }
+
     /**
      * Register PHP Functions to use in internal DOMXPath
      *
@@ -310,5 +331,23 @@ class Document
     public function registerXpathPhpFunctions($xpathPhpFunctions = true)
     {
         $this->xpathPhpFunctions = $xpathPhpFunctions;
+    }
+
+    /**
+     * Disable the ability to load external XML entities based on libxml version
+     *
+     * If we are using libxml < 2.9, unsafe XML entity loading must be
+     * disabled with a flag.
+     *
+     * If we are using libxml >= 2.9, XML entity loading is disabled by default.
+     *
+     * @return bool
+     */
+    private static function disableEntityLoader(bool $flag = true)
+    {
+        if (LIBXML_VERSION < 20900) {
+            return libxml_disable_entity_loader($flag);
+        }
+        return $flag;
     }
 }

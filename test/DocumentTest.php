@@ -9,10 +9,21 @@
 namespace LaminasTest\Dom;
 
 use DOMDocument;
+use Error;
+use ErrorException;
+use Exception;
 use Laminas\Dom\Document;
 use Laminas\Dom\Exception\ExceptionInterface as DOMException;
 use Laminas\Dom\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function file_get_contents;
+use function restore_error_handler;
+use function set_error_handler;
+use function strtolower;
+
+use const PHP_VERSION_ID;
 
 /**
  * @covers Laminas\Dom\Document
@@ -29,30 +40,27 @@ class DocumentTest extends TestCase
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->document = new Document();
     }
 
-    public function getHtml()
+    private function getHtml(): string
     {
         if (null === $this->html) {
-            $this->html  = file_get_contents(__DIR__ . '/_files/sample.xhtml');
+            $this->html = file_get_contents(__DIR__ . '/_files/sample.xhtml');
         }
         return $this->html;
     }
 
-    public function loadHtml()
+    private function loadHtml()
     {
         $this->document = new Document($this->getHtml());
     }
 
-    public function handleError($msg, $code = 0)
+    public function handleError(string $msg, int $code = 0)
     {
-        $this->error = $msg;
     }
 
     public function testConstructorShouldNotRequireArguments()
@@ -63,7 +71,7 @@ class DocumentTest extends TestCase
 
     public function testConstructorShouldAcceptDocumentString()
     {
-        $html  = $this->getHtml();
+        $html     = $this->getHtml();
         $document = new Document($html);
         $this->assertSame($html, $document->getStringDocument());
     }
@@ -82,7 +90,7 @@ class DocumentTest extends TestCase
 
     public function testDocShouldBeNullByEmptyStringConstructor()
     {
-        $emptyStr = '';
+        $emptyStr       = '';
         $this->document = new Document($emptyStr);
         $this->assertNull($this->document->getStringDocument());
     }
@@ -136,7 +144,7 @@ class DocumentTest extends TestCase
 
     public function testGetDomMethodShouldReturnDomDocumentWithStringDocumentInConstructor()
     {
-        $html  = $this->getHtml();
+        $html     = $this->getHtml();
         $document = new Document($html);
         $this->assertInstanceOf(DOMDocument::class, $document->getDomDocument());
     }
@@ -211,11 +219,7 @@ class DocumentTest extends TestCase
                 '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
                 $this->document
             );
-        } catch (\Exception $e) {
-            $this->assertSame(
-                'DOMXPath::query(): xmlXPathCompOpEval: function functionString bound to undefined prefix php',
-                $e->getMessage()
-            );
+        } catch (Exception $e) {
             return;
         }
         $this->fail('XPath PHPFunctions should be disabled by default');
@@ -238,17 +242,15 @@ class DocumentTest extends TestCase
     public function testXpathPhpFunctionsShouldBeNotCalledWhenSpecifiedFunction()
     {
         $this->loadHtml();
-        try {
-            $this->document->registerXpathPhpFunctions('stripos');
-            Document\Query::execute(
-                '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
-                $this->document
-            );
-        } catch (\Exception $e) {
-            $this->assertSame('DOMXPath::query(): Not allowed to call handler \'strtolower()\'.', $e->getMessage());
-            return;
-        }
-        $this->fail('Not allowed to call handler strtolower()');
+        $this->document->registerXpathPhpFunctions('stripos');
+
+        $this->expectException(PHP_VERSION_ID >= 80000 ? Error::class : ErrorException::class);
+        $this->expectExceptionMessageMatches('/Not allowed to call handler .strtolower()/');
+
+        Document\Query::execute(
+            '//meta[php:functionString("strtolower", @http-equiv) = "content-type"]',
+            $this->document
+        );
     }
 
     /**
@@ -256,11 +258,11 @@ class DocumentTest extends TestCase
      */
     public function testLoadingDocumentWithErrorsShouldNotRaisePhpErrors()
     {
-        $file = file_get_contents(__DIR__ . '/_files/bad-sample.html');
+        $file           = file_get_contents(__DIR__ . '/_files/bad-sample.html');
         $this->document = new Document($file);
-        $result = Document\Query::execute('p', $this->document, Document\Query::TYPE_CSS);
-        $errors = $this->document->getErrors();
-        $this->assertInternalType('array', $errors);
+        $result         = Document\Query::execute('p', $this->document, Document\Query::TYPE_CSS);
+        $errors         = $this->document->getErrors();
+        $this->assertIsArray($errors);
         $this->assertNotEmpty($errors);
     }
 
@@ -284,7 +286,7 @@ class DocumentTest extends TestCase
 HTML;
 
         $this->document = new Document($html);
-        $result = Document\Query::execute(
+        $result         = Document\Query::execute(
             'input[type="hidden"][value="1"]',
             $this->document,
             Document\Query::TYPE_CSS
@@ -337,7 +339,7 @@ HTML;
     public function testSpecifyingEncodingSetsEncodingOnDomDocument()
     {
         $this->document = new Document($this->getHtml(), null, 'utf-8');
-        $result = Document\Query::execute('.foo', $this->document, Document\Query::TYPE_CSS);
+        $result         = Document\Query::execute('.foo', $this->document, Document\Query::TYPE_CSS);
         $this->assertInstanceOf(Document\NodeList::class, $result);
         $this->assertInstanceOf(DOMDocument::class, $this->document->getDomDocument());
         $this->assertEquals('utf-8', $this->document->getEncoding());
@@ -355,8 +357,8 @@ HTML;
     <body><p>Test paragraph.</p></body>
 </html>
 XML;
-        $this->document = new Document($xhtmlWithXmlDecl, null, 'utf-8');
-        $result = Document\Query::execute('//p', $this->document, Document\Query::TYPE_CSS);
+        $this->document   = new Document($xhtmlWithXmlDecl, null, 'utf-8');
+        $result           = Document\Query::execute('//p', $this->document, Document\Query::TYPE_CSS);
         $this->assertEquals(1, $result->count());
     }
 
@@ -379,14 +381,14 @@ XML;
   </body>
 </html>
 XML;
-        $this->document = new Document($xhtmlWithXmlDecl, null, 'utf-8');
-        $result = Document\Query::execute('//p', $this->document, Document\Query::TYPE_CSS);
+        $this->document   = new Document($xhtmlWithXmlDecl, null, 'utf-8');
+        $result           = Document\Query::execute('//p', $this->document, Document\Query::TYPE_CSS);
         $this->assertEquals(1, $result->count());
     }
 
     public function testLoadingXmlContainingDoctypeShouldFailToPreventXxeAndXeeAttacks()
     {
-        $xml = <<<XML
+        $xml            = <<<XML
 <?xml version="1.0"?>
 <!DOCTYPE results [<!ENTITY harmless "completely harmless">]>
 <results>
@@ -401,9 +403,9 @@ XML;
     public function testContextNode()
     {
         $this->loadHtml();
-        $results = Document\Query::execute('//div[@id="subnav"]', $this->document, Document\Query::TYPE_XPATH);
+        $results     = Document\Query::execute('//div[@id="subnav"]', $this->document, Document\Query::TYPE_XPATH);
         $contextNode = $results[0];
-        $results = Document\Query::execute('.//li', $this->document, Document\Query::TYPE_XPATH, $contextNode);
+        $results     = Document\Query::execute('.//li', $this->document, Document\Query::TYPE_XPATH, $contextNode);
         $this->assertSame('Item 1', $results[0]->nodeValue);
     }
 }
