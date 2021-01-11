@@ -17,7 +17,6 @@ use Laminas\Dom\Exception\ExceptionInterface as DOMException;
 use Laminas\Dom\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
-use function count;
 use function file_get_contents;
 use function restore_error_handler;
 use function set_error_handler;
