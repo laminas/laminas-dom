@@ -8,8 +8,12 @@
 
 namespace LaminasTest\Dom\Document;
 
+use Generator;
 use Laminas\Dom\Document\Query;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function explode;
 
 /**
  * @covers Laminas\Dom\Document\Query
@@ -133,7 +137,7 @@ class QueryTest extends TestCase
         $this->assertEquals("//tag[@id='id']//@attribute", $test);
     }
 
-    public function descendantSelector()
+    public function descendantSelector(): Generator
     {
         yield 'space before' => ['child >leaf'];
         yield 'space after' => ['child> leaf'];
@@ -144,9 +148,7 @@ class QueryTest extends TestCase
 
     /**
      * @group Laminas-8006
-     *
      * @dataProvider descendantSelector
-     *
      * @param string $path
      */
     public function testShouldAllowWhitespaceInDescendantSelectorExpressions($path)
@@ -185,14 +187,14 @@ class QueryTest extends TestCase
         $this->assertEquals("//a[@href='http://example.com']", $test);
     }
 
-    public function nestedAttributeSelectors()
+    public function nestedAttributeSelectors(): array
     {
         return [
-            'with-double-quotes' => [
+            'with-double-quotes'                     => [
                 'select[name="foo"] option[selected="selected"]',
                 "//select[@name='foo']//option[@selected='selected']",
             ],
-            'with-single-quotes' => [
+            'with-single-quotes'                     => [
                 "select[name='foo'] option[selected='selected']",
                 "//select[@name='foo']//option[@selected='selected']",
             ],
@@ -210,7 +212,7 @@ class QueryTest extends TestCase
     /**
      * @dataProvider nestedAttributeSelectors
      */
-    public function testTransformNestedAttributeSelectors($selector, $expectedXpath)
+    public function testTransformNestedAttributeSelectors(string $selector, string $expectedXpath)
     {
         $this->assertEquals($expectedXpath, Query::cssToXpath($selector));
     }

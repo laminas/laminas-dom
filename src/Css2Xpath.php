@@ -8,10 +8,16 @@
 
 namespace Laminas\Dom;
 
+use function sprintf;
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
+
 /**
  * Transform CSS selectors to XPath
  *
  * @deprecated
+ *
  * @see Document\Query
  */
 class Css2Xpath
@@ -20,7 +26,9 @@ class Css2Xpath
      * Transform CSS expression to XPath
      *
      * @deprecated
+     *
      * @see Document\Query
+     *
      * @param  string $path
      * @return string
      */

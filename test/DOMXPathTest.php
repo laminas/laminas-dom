@@ -26,19 +26,19 @@ class DOMXPathTest extends TestCase
 
     public function testQueryWithErrorExceptionSuccess()
     {
-        $domXPath = new DOMXPath($this->document);
+        $domXpath = new DOMXPath($this->document);
 
-        $result = $domXPath->queryWithErrorException('any');
+        $result = $domXpath->queryWithErrorException('any');
 
         $this->assertInstanceOf(DOMNodeList::class, $result);
     }
 
     public function testQueryWithErrorExceptionThrowExceptionWhenQueryExpresionIsInvalid()
     {
-        $domXPath = new DOMXPath($this->document);
+        $domXpath = new DOMXPath($this->document);
 
         $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('Invalid expression');
-        $domXPath->queryWithErrorException('any#any');
+        $domXpath->queryWithErrorException('any#any');
     }
 }
