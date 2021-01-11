@@ -39,8 +39,8 @@ class Query
     /**#@+
      * Query types
      */
-    const TYPE_XPATH = 'TYPE_XPATH';
-    const TYPE_CSS   = 'TYPE_CSS';
+    public const TYPE_XPATH = 'TYPE_XPATH';
+    public const TYPE_CSS   = 'TYPE_CSS';
     /**#@-*/
 
     /**
@@ -124,7 +124,7 @@ class Query
 
         foreach ($segments as $key => $segment) {
             $pathSegment = static::_tokenize($segment);
-            if (0 == $key) {
+            if (0 === $key) {
                 if (0 === strpos($pathSegment, '[contains(')) {
                     $paths[0] .= '*' . ltrim($pathSegment, '*');
                 } else {
@@ -144,7 +144,7 @@ class Query
             }
         }
 
-        if (1 == count($paths)) {
+        if (1 === count($paths)) {
             return $paths[0];
         }
         return implode('|', $paths);

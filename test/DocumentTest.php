@@ -46,7 +46,7 @@ class DocumentTest extends TestCase
         $this->document = new Document();
     }
 
-    public function getHtml()
+    private function getHtml(): string
     {
         if (null === $this->html) {
             $this->html = file_get_contents(__DIR__ . '/_files/sample.xhtml');
@@ -54,14 +54,13 @@ class DocumentTest extends TestCase
         return $this->html;
     }
 
-    public function loadHtml()
+    private function loadHtml()
     {
         $this->document = new Document($this->getHtml());
     }
 
-    public function handleError($msg, $code = 0)
+    public function handleError(string $msg, int $code = 0)
     {
-        $this->error = $msg;
     }
 
     public function testConstructorShouldNotRequireArguments()

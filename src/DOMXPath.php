@@ -70,14 +70,14 @@ class DOMXPath extends \DOMXPath
      */
     public function addError($errno, $errstr = '', $errfile = '', $errline = 0)
     {
-        $last_error     = end($this->errors);
+        $lastError      = end($this->errors);
         $this->errors[] = new ErrorException(
             $errstr,
             0,
             $errno,
             $errfile,
             $errline,
-            $last_error
+            $lastError
         );
     }
 }

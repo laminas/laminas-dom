@@ -39,9 +39,9 @@ class Query
     /**#@+
      * Document types
      */
-    const DOC_XML   = 'docXml';
-    const DOC_HTML  = 'docHtml';
-    const DOC_XHTML = 'docXhtml';
+    public const DOC_XML   = 'docXml';
+    public const DOC_HTML  = 'docHtml';
+    public const DOC_XHTML = 'docXhtml';
     /**#@-*/
 
     /** @var string */
@@ -129,7 +129,7 @@ class Query
             return $this;
         }
         // breaking XML declaration to make syntax highlighting work
-        if ('<' . '?xml' == substr(trim($document), 0, 5)) {
+        if ('<' . '?xml' === substr(trim($document), 0, 5)) {
             if (preg_match('/<html[^>]*xmlns="([^"]+)"[^>]*>/i', $document, $matches)) {
                 $this->xpathNamespaces[] = $matches[1];
                 return $this->setDocumentXhtml($document, $encoding);
@@ -320,7 +320,7 @@ class Query
      * @param  DOMDocument $document
      * @param  string|array $xpathQuery
      * @return DOMNodeList
-     * @throws ErrorException If query cannot be executed
+     * @throws ErrorException If query cannot be executed.
      */
     protected function getNodeList($document, $xpathQuery, ?DOMNode $contextNode = null)
     {
@@ -349,7 +349,7 @@ class Query
      *
      * @return bool
      */
-    private static function disableEntityLoader($flag = true)
+    private static function disableEntityLoader(bool $flag = true)
     {
         if (LIBXML_VERSION < 20900) {
             return libxml_disable_entity_loader($flag);

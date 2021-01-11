@@ -8,6 +8,7 @@
 
 namespace LaminasTest\Dom\Document;
 
+use Generator;
 use Laminas\Dom\Document\Query;
 use PHPUnit\Framework\TestCase;
 
@@ -136,7 +137,7 @@ class QueryTest extends TestCase
         $this->assertEquals("//tag[@id='id']//@attribute", $test);
     }
 
-    public function descendantSelector()
+    public function descendantSelector(): Generator
     {
         yield 'space before' => ['child >leaf'];
         yield 'space after' => ['child> leaf'];
@@ -186,7 +187,7 @@ class QueryTest extends TestCase
         $this->assertEquals("//a[@href='http://example.com']", $test);
     }
 
-    public function nestedAttributeSelectors()
+    public function nestedAttributeSelectors(): array
     {
         return [
             'with-double-quotes'                     => [
@@ -211,7 +212,7 @@ class QueryTest extends TestCase
     /**
      * @dataProvider nestedAttributeSelectors
      */
-    public function testTransformNestedAttributeSelectors($selector, $expectedXpath)
+    public function testTransformNestedAttributeSelectors(string $selector, string $expectedXpath)
     {
         $this->assertEquals($expectedXpath, Query::cssToXpath($selector));
     }

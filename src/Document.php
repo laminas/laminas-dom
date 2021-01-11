@@ -31,9 +31,9 @@ class Document
     /**#@+
      * Document types
      */
-    const DOC_HTML  = 'DOC_HTML';
-    const DOC_XHTML = 'DOC_XHTML';
-    const DOC_XML   = 'DOC_XML';
+    public const DOC_HTML  = 'DOC_HTML';
+    public const DOC_XHTML = 'DOC_XHTML';
+    public const DOC_XML   = 'DOC_XML';
     /**#@-*/
 
     /**
@@ -120,7 +120,7 @@ class Document
         }
 
         // Breaking XML declaration to make syntax highlighting work
-        if ('<' . '?xml' == substr(trim($document), 0, 5)) {
+        if ('<' . '?xml' === substr(trim($document), 0, 5)) {
             $type = static::DOC_XML;
             if (preg_match('/<html[^>]*xmlns="([^"]+)"[^>]*>/i', $document, $matches)) {
                 $this->xpathNamespaces[] = $matches[1];
@@ -166,7 +166,7 @@ class Document
      * Get DOMDocument generated from set raw document
      *
      * @return DOMDocument
-     * @throws Exception\RuntimeException If cannot get DOMDocument; no document registered
+     * @throws Exception\RuntimeException If cannot get DOMDocument; no document registered.
      */
     public function getDomDocument()
     {
@@ -244,6 +244,7 @@ class Document
     /**
      * Get DOMDocument from set raw document
      *
+     * @param string $stringDocument
      * @return DOMDocument
      * @throws Exception\RuntimeException
      */
@@ -342,7 +343,7 @@ class Document
      *
      * @return bool
      */
-    private static function disableEntityLoader($flag = true)
+    private static function disableEntityLoader(bool $flag = true)
     {
         if (LIBXML_VERSION < 20900) {
             return libxml_disable_entity_loader($flag);
