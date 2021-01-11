@@ -10,10 +10,28 @@ namespace Laminas\Dom;
 
 use DOMDocument;
 use DOMNode;
+use DOMNodeList;
+use ErrorException;
+
+use function libxml_clear_errors;
+use function libxml_disable_entity_loader;
+use function libxml_get_errors;
+use function libxml_use_internal_errors;
+use function preg_match;
+use function sprintf;
+use function strlen;
+use function strstr;
+use function substr;
+use function trim;
+
+use const LIBXML_VERSION;
+use const XML_DOCUMENT_TYPE_NODE;
 
 /**
  * Query DOM structures based on CSS selectors and/or XPath
+ *
  * @deprecated
+ *
  * @see \Laminas\Dom\Document\Query
  */
 class Query
@@ -26,37 +44,40 @@ class Query
     const DOC_XHTML = 'docXhtml';
     /**#@-*/
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $document;
 
     /**
      * DOMDocument errors, if any
+     *
      * @var false|array
      */
     protected $documentErrors = false;
 
     /**
      * Document type
+     *
      * @var string
      */
     protected $docType;
 
     /**
      * Document encoding
+     *
      * @var null|string
      */
     protected $encoding;
 
     /**
      * XPath namespaces
+     *
      * @var array
      */
     protected $xpathNamespaces = [];
 
     /**
      * XPath PHP Functions
+     *
      * @var mixed
      */
     protected $xpathPhpFunctions;
@@ -81,7 +102,7 @@ class Query
      */
     public function setEncoding($encoding)
     {
-        $this->encoding = (null === $encoding) ? null : (string) $encoding;
+        $this->encoding = null === $encoding ? null : (string) $encoding;
         return $this;
     }
 
@@ -206,10 +227,9 @@ class Query
      * Perform a CSS selector query
      *
      * @param  string $query
-     * @param  DOMNode $contextNode
      * @return NodeList
      */
-    public function execute($query, DOMNode $contextNode = null)
+    public function execute($query, ?DOMNode $contextNode = null)
     {
         $xpathQuery = Document\Query::cssToXpath($query);
         return $this->queryXpath($xpathQuery, $query, $contextNode);
@@ -224,7 +244,7 @@ class Query
      * @throws Exception\RuntimeException
      * @return NodeList
      */
-    public function queryXpath($xpathQuery, $query = null, DOMNode $contextNode = null)
+    public function queryXpath($xpathQuery, $query = null, ?DOMNode $contextNode = null)
     {
         if (null === ($document = $this->getDocument())) {
             throw new Exception\RuntimeException('Cannot query; no document registered');
@@ -238,7 +258,7 @@ class Query
         } else {
             $domDoc = new DOMDocument('1.0', $encoding);
         }
-        $type   = $this->getDocumentType();
+        $type = $this->getDocumentType();
         switch ($type) {
             case self::DOC_XML:
                 $success = $domDoc->loadXML($document);
@@ -268,7 +288,7 @@ class Query
             throw new Exception\RuntimeException(sprintf('Error parsing document (type == %s)', $type));
         }
 
-        $nodeList   = $this->getNodeList($domDoc, $xpathQuery, $contextNode);
+        $nodeList = $this->getNodeList($domDoc, $xpathQuery, $contextNode);
         return new NodeList($query, $xpathQuery, $domDoc, $nodeList, $contextNode);
     }
 
@@ -299,26 +319,24 @@ class Query
      *
      * @param  DOMDocument $document
      * @param  string|array $xpathQuery
-     * @param  DOMNode $contextNode
-     * @return \DOMNodeList
-     * @throws \ErrorException If query cannot be executed
+     * @return DOMNodeList
+     * @throws ErrorException If query cannot be executed
      */
-    protected function getNodeList($document, $xpathQuery, DOMNode $contextNode = null)
+    protected function getNodeList($document, $xpathQuery, ?DOMNode $contextNode = null)
     {
-        $xpath      = new DOMXPath($document);
+        $xpath = new DOMXPath($document);
         foreach ($this->xpathNamespaces as $prefix => $namespaceUri) {
             $xpath->registerNamespace($prefix, $namespaceUri);
         }
         if ($this->xpathPhpFunctions) {
             $xpath->registerNamespace("php", "http://php.net/xpath");
-            ($this->xpathPhpFunctions === true) ?
+            $this->xpathPhpFunctions === true ?
                 $xpath->registerPhpFunctions()
                 : $xpath->registerPhpFunctions($this->xpathPhpFunctions);
         }
         $xpathQuery = (string) $xpathQuery;
 
-        $nodeList = $xpath->queryWithErrorException($xpathQuery, $contextNode);
-        return $nodeList;
+        return $xpath->queryWithErrorException($xpathQuery, $contextNode);
     }
 
     /**

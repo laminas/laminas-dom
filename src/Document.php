@@ -10,6 +10,19 @@ namespace Laminas\Dom;
 
 use DOMDocument;
 
+use function libxml_clear_errors;
+use function libxml_disable_entity_loader;
+use function libxml_get_errors;
+use function libxml_use_internal_errors;
+use function preg_match;
+use function sprintf;
+use function strstr;
+use function substr;
+use function trim;
+
+use const LIBXML_VERSION;
+use const XML_DOCUMENT_TYPE_NODE;
+
 /**
  * Class used to initialize DomDocument from string, with proper verifications
  */
@@ -18,43 +31,49 @@ class Document
     /**#@+
      * Document types
      */
-    const DOC_HTML     = 'DOC_HTML';
-    const DOC_XHTML    = 'DOC_XHTML';
-    const DOC_XML      = 'DOC_XML';
+    const DOC_HTML  = 'DOC_HTML';
+    const DOC_XHTML = 'DOC_XHTML';
+    const DOC_XML   = 'DOC_XML';
     /**#@-*/
 
     /**
      * Raw document
+     *
      * @var string
      */
     protected $stringDocument;
 
     /**
      * DOMDocument generated from raw string document
+     *
      * @var DOMDocument
      */
     protected $domDocument;
 
     /**
      * Type of the document provided
+     *
      * @var string
      */
     protected $type;
 
     /**
      * Error list generated from transformation of document to DOMDocument
+     *
      * @var array
      */
     protected $errors = [];
 
     /**
      * XPath namespaces
+     *
      * @var array
      */
     protected $xpathNamespaces = [];
 
     /**
      * XPath PHP Functions
+     *
      * @var mixed
      */
     protected $xpathPhpFunctions;
@@ -105,13 +124,13 @@ class Document
             $type = static::DOC_XML;
             if (preg_match('/<html[^>]*xmlns="([^"]+)"[^>]*>/i', $document, $matches)) {
                 $this->xpathNamespaces[] = $matches[1];
-                $type = static::DOC_XHTML;
+                $type                    = static::DOC_XHTML;
             }
         }
 
         // Unsetting previously registered DOMDocument
-        $this->domDocument     = null;
-        $this->stringDocument  = ! empty($document) ? $document : null;
+        $this->domDocument    = null;
+        $this->stringDocument = ! empty($document) ? $document : null;
 
         $this->setType($forcedType ?: (! empty($document) ? $type : null));
         $this->setEncoding($forcedEncoding);
@@ -165,9 +184,9 @@ class Document
     /**
      * Set DOMDocument
      *
-     * @param  DOMDocument $domDocument
-     * @return self
      * @deprecated
+     *
+     * @return self
      */
     protected function setDomDocument(DOMDocument $domDocument)
     {
@@ -233,9 +252,9 @@ class Document
         libxml_use_internal_errors(true);
         $disableEntityLoaderFlag = self::disableEntityLoader();
 
-        $encoding  = $this->getEncoding();
-        $domDoc    = null === $encoding ? new DOMDocument('1.0') : new DOMDocument('1.0', $encoding);
-        $type      = $this->getType();
+        $encoding = $this->getEncoding();
+        $domDoc   = null === $encoding ? new DOMDocument('1.0') : new DOMDocument('1.0', $encoding);
+        $type     = $this->getType();
 
         switch ($type) {
             case static::DOC_XML:
@@ -301,6 +320,7 @@ class Document
     {
         return $this->xpathPhpFunctions;
     }
+
     /**
      * Register PHP Functions to use in internal DOMXPath
      *

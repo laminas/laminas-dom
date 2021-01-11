@@ -15,6 +15,8 @@ use Laminas\Dom\Document\NodeList;
 use Laminas\Dom\Exception\BadMethodCallException;
 use PHPUnit\Framework\TestCase;
 
+use function iterator_to_array;
+
 /**
  * @covers Laminas\Dom\Document\NodeList
  */
@@ -31,7 +33,7 @@ class NodeListTest extends TestCase
         $document = new DOMDocument();
         $document->loadHTML('<html><body><a></a><b></b></body></html>');
         $this->domNodeList = $domNodeList = $document->getElementsByTagName('*');
-        $this->nodeList = new NodeList($domNodeList);
+        $this->nodeList    = new NodeList($domNodeList);
     }
 
     /**
@@ -39,9 +41,9 @@ class NodeListTest extends TestCase
      */
     public function testEmptyResultDoesNotReturnIteratorValidTrue()
     {
-        $dom = new DOMDocument();
+        $dom           = new DOMDocument();
         $emptyNodeList = $dom->getElementsByTagName('a');
-        $result = new NodeList($emptyNodeList);
+        $result        = new NodeList($emptyNodeList);
 
         $this->assertFalse($result->valid());
     }

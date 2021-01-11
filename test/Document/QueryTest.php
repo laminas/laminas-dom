@@ -11,6 +11,9 @@ namespace LaminasTest\Dom\Document;
 use Laminas\Dom\Document\Query;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function explode;
+
 /**
  * @covers Laminas\Dom\Document\Query
  */
@@ -144,9 +147,7 @@ class QueryTest extends TestCase
 
     /**
      * @group Laminas-8006
-     *
      * @dataProvider descendantSelector
-     *
      * @param string $path
      */
     public function testShouldAllowWhitespaceInDescendantSelectorExpressions($path)
@@ -188,11 +189,11 @@ class QueryTest extends TestCase
     public function nestedAttributeSelectors()
     {
         return [
-            'with-double-quotes' => [
+            'with-double-quotes'                     => [
                 'select[name="foo"] option[selected="selected"]',
                 "//select[@name='foo']//option[@selected='selected']",
             ],
-            'with-single-quotes' => [
+            'with-single-quotes'                     => [
                 "select[name='foo'] option[selected='selected']",
                 "//select[@name='foo']//option[@selected='selected']",
             ],

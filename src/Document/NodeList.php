@@ -20,21 +20,18 @@ use Laminas\Dom\Exception;
  */
 class NodeList implements Iterator, Countable, ArrayAccess
 {
-    /**
-     * @var DOMNodeList
-     */
+    /** @var DOMNodeList */
     protected $list;
 
     /**
      * Current iterator position
+     *
      * @var int
      */
     protected $position = 0;
 
     /**
      * Constructor
-     *
-     * @param DOMNodeList  $list
      */
     public function __construct(DOMNodeList $list)
     {
@@ -114,7 +111,7 @@ class NodeList implements Iterator, Countable, ArrayAccess
     public function offsetExists($key)
     {
         // DOMNodeList return `null` if item not exists.
-        return (null !== $this->list->item($key));
+        return null !== $this->list->item($key);
     }
 
     /**
