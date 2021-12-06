@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-dom for the canonical source repository
- * @copyright https://github.com/laminas/laminas-dom/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-dom/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Dom;
 
@@ -114,6 +110,10 @@ class Document
      */
     protected function setStringDocument($document, $forcedType = null, $forcedEncoding = null)
     {
+        if ($document === null) {
+            $document = '';
+        }
+
         $type = static::DOC_HTML;
         if (strstr($document, 'DTD XHTML')) {
             $type = static::DOC_XHTML;
