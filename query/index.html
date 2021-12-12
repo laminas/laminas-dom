@@ -287,10 +287,10 @@ following, in any combination:</p>
   match as long as the named style is present anywhere in the style declaration.</li>
 <li><strong>id attributes</strong>: element ID attributes to match: <code>#content</code>, <code>div#nav</code>, etc.</li>
 <li><strong>arbitrary attributes</strong>: arbitrary element attributes to match. Three
-  different types of matching are provided:<ul>
+  different types of matching are provided:</li>
 <li><strong>exact match</strong>: the attribute <em>exactly</em> matches the specified string.
-  <code>div[bar="baz"]</code> would match a <code>div</code> element with a <code>bar</code> attribute that
-  exactly matches the value <code>baz</code>.</li>
+    <code>div[bar="baz"]</code> would match a <code>div</code> element with a <code>bar</code> attribute that
+    exactly matches the value <code>baz</code>.<ul>
 <li><strong>word match</strong>: the attribute contains a <em>word</em> matching the string.
   <code>div[bar~="baz"]</code> would match a <code>div</code> element with a <code>bar</code> attribute that
   contains the word <code>baz</code>. <code>&lt;div bar="foo baz"&gt;</code> would match, but
@@ -349,7 +349,7 @@ method; you can pass any valid XPath query to this method, and it will return a
 <h2 id="methods-available">Methods Available</h2>
 <p>Below is a listing of methods available in the various classes exposed by
 laminas-dom.</p>
-<h3>Laminas\Dom\Query</h3>
+<h3 id="laminasdomquery">Laminas\Dom\Query</h3>
 <p>The following methods are available to <code>Laminas\Dom\Query</code>:</p>
 <ul>
 <li><code>setDocumentXml($document, $encoding = null)</code>: specify an XML string to query against.</li>
@@ -368,7 +368,7 @@ laminas-dom.</p>
 <li><code>execute($query)</code>: query the document using CSS selector notation.</li>
 <li><code>queryXpath($xPathQuery)</code>: query the document using XPath notation.</li>
 </ul>
-<h3>Laminas\Dom\NodeList</h3>
+<h3 id="laminasdomnodelist">Laminas\Dom\NodeList</h3>
 <p>As mentioned previously, <code>Laminas\Dom\NodeList</code> implements both <code>Iterator</code> and
 <code>Countable</code>, and as such can be used in a <code>foreach()</code> loop as well as with the
 <code>count()</code> function. Additionally, it exposes the following methods:</p>
@@ -404,16 +404,6 @@ laminas-dom.</p>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-dom/edit/master/docs/book/query.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>
