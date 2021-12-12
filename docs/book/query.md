@@ -32,9 +32,9 @@ following, in any combination:
 - **id attributes**: element ID attributes to match: `#content`, `div#nav`, etc.
 - **arbitrary attributes**: arbitrary element attributes to match. Three
   different types of matching are provided:
-    - **exact match**: the attribute *exactly* matches the specified string.
-      `div[bar="baz"]` would match a `div` element with a `bar` attribute that
-      exactly matches the value `baz`.
+  - **exact match**: the attribute *exactly* matches the specified string.
+    `div[bar="baz"]` would match a `div` element with a `bar` attribute that
+    exactly matches the value `baz`.
     - **word match**: the attribute contains a *word* matching the string.
       `div[bar~="baz"]` would match a `div` element with a `bar` attribute that
       contains the word `baz`. `<div bar="foo baz">` would match, but

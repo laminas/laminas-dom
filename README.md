@@ -8,13 +8,11 @@
 >
 > - [symfony/dom-crawler](https://symfony.com/doc/current/components/dom_crawler.html)
 
-[![Build Status](https://travis-ci.com/laminas/laminas-dom.svg?branch=master)](https://travis-ci.com/laminas/laminas-dom)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-dom/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-dom?branch=master)
+[![Build Status](https://github.com/laminas/laminas-dom/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-dom/actions/workflows/continuous-integration.yml)
 
 The `Laminas\Dom` component provides tools for working with DOM documents and
 structures. Currently, we offer `Laminas\Dom\Query`, which provides a unified
 interface for querying DOM documents utilizing both XPath and CSS selectors.
-
 
 - File issues at https://github.com/laminas/laminas-dom/issues
 - Documentation is at https://docs.laminas.dev/laminas-dom
