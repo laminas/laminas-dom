@@ -322,7 +322,7 @@ class Query
     {
         $xpath = new DOMXPath($document);
         foreach ($this->xpathNamespaces as $prefix => $namespaceUri) {
-            $xpath->registerNamespace($prefix, $namespaceUri);
+            $xpath->registerNamespace((string) $prefix, $namespaceUri);
         }
         if ($this->xpathPhpFunctions) {
             $xpath->registerNamespace("php", "http://php.net/xpath");
