@@ -7,7 +7,6 @@ namespace Laminas\Dom;
 use DOMDocument;
 
 use function libxml_clear_errors;
-use function libxml_disable_entity_loader;
 use function libxml_get_errors;
 use function libxml_use_internal_errors;
 use function preg_match;
@@ -16,7 +15,6 @@ use function strstr;
 use function substr;
 use function trim;
 
-use const LIBXML_VERSION;
 use const XML_DOCUMENT_TYPE_NODE;
 
 /**
@@ -251,7 +249,6 @@ class Document
     protected function getDomDocumentFromString($stringDocument)
     {
         libxml_use_internal_errors(true);
-        $disableEntityLoaderFlag = self::disableEntityLoader();
 
         $encoding = $this->getEncoding();
         $domDoc   = null === $encoding ? new DOMDocument('1.0') : new DOMDocument('1.0', $encoding);
@@ -281,7 +278,6 @@ class Document
             libxml_clear_errors();
         }
 
-        self::disableEntityLoader($disableEntityLoaderFlag);
         libxml_use_internal_errors(false);
 
         if (! $success) {
@@ -331,23 +327,5 @@ class Document
     public function registerXpathPhpFunctions($xpathPhpFunctions = true)
     {
         $this->xpathPhpFunctions = $xpathPhpFunctions;
-    }
-
-    /**
-     * Disable the ability to load external XML entities based on libxml version
-     *
-     * If we are using libxml < 2.9, unsafe XML entity loading must be
-     * disabled with a flag.
-     *
-     * If we are using libxml >= 2.9, XML entity loading is disabled by default.
-     *
-     * @return bool
-     */
-    private static function disableEntityLoader(bool $flag = true)
-    {
-        if (LIBXML_VERSION < 20900) {
-            return libxml_disable_entity_loader($flag);
-        }
-        return $flag;
     }
 }
