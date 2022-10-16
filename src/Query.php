@@ -10,7 +10,6 @@ use DOMNodeList;
 use ErrorException;
 
 use function libxml_clear_errors;
-use function libxml_disable_entity_loader;
 use function libxml_get_errors;
 use function libxml_use_internal_errors;
 use function preg_match;
@@ -20,7 +19,6 @@ use function strstr;
 use function substr;
 use function trim;
 
-use const LIBXML_VERSION;
 use const XML_DOCUMENT_TYPE_NODE;
 
 /**
@@ -248,7 +246,6 @@ class Query
 
         $encoding = $this->getEncoding();
         libxml_use_internal_errors(true);
-        $disableEntityLoaderFlag = self::disableEntityLoader();
         if (null === $encoding) {
             $domDoc = new DOMDocument('1.0');
         } else {
@@ -277,7 +274,6 @@ class Query
             $this->documentErrors = $errors;
             libxml_clear_errors();
         }
-        self::disableEntityLoader($disableEntityLoaderFlag);
         libxml_use_internal_errors(false);
 
         if (! $success) {
@@ -333,23 +329,5 @@ class Query
         $xpathQuery = (string) $xpathQuery;
 
         return $xpath->queryWithErrorException($xpathQuery, $contextNode);
-    }
-
-    /**
-     * Disable the ability to load external XML entities based on libxml version
-     *
-     * If we are using libxml < 2.9, unsafe XML entity loading must be
-     * disabled with a flag.
-     *
-     * If we are using libxml >= 2.9, XML entity loading is disabled by default.
-     *
-     * @return bool
-     */
-    private static function disableEntityLoader(bool $flag = true)
-    {
-        if (LIBXML_VERSION < 20900) {
-            return libxml_disable_entity_loader($flag);
-        }
-        return $flag;
     }
 }
