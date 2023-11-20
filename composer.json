@@ -33,8 +33,8 @@
         "ext-libxml": "*"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "^2.4.0",
-        "phpunit/phpunit": "^9.5.25"
+        "laminas/laminas-coding-standard": "^2.5.0",
+        "phpunit/phpunit": "^9.6.13"
     },
     "autoload": {
         "psr-4": {
